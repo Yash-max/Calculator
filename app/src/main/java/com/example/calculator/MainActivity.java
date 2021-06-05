@@ -44,11 +44,28 @@ public class MainActivity extends AppCompatActivity {
         nine = (Button)findViewById(R.id.nine);
         zero = (Button)findViewById(R.id.zero);
         output.setText("0");
+        mod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lhs = input.getText().toString();
+                rhs = output.getText().toString();
+                if((operator.equals("") == false && operator.equals("/") == false && operator.equals("%") == false) && (rhs.equals("") == false || rhs.equals("0") == false)) {
+                    equal.callOnClick();
+                }
+                input.setText("0");
+                if(rhs.equals("0")) output.setText(lhs);
+                flag = 0;
+                operator = "%";
+            }
+        });
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 lhs = input.getText().toString();
                 rhs = output.getText().toString();
+                if((operator.equals("") == false && operator.equals("/") == false) && (rhs.equals("") == false || rhs.equals("0") == false)) {
+                    equal.callOnClick();
+                }
                 input.setText("0");
                 if(rhs.equals("0")) output.setText(lhs);
                 flag = 0;
@@ -60,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 lhs = input.getText().toString();
                 rhs = output.getText().toString();
+                if((operator.equals("") == false && operator.equals("/") == false) && (rhs.equals("") == false || rhs.equals("0") == false)) {
+                    equal.callOnClick();
+                }
                 input.setText("0");
                 if(rhs.equals("0")) output.setText(lhs);
                 flag = 0;
@@ -71,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 lhs = input.getText().toString();
                 rhs = output.getText().toString();
+                if((operator.equals("") == false && operator.equals("/") == false) && (rhs.equals("") == false || rhs.equals("0") == false)) {
+                    equal.callOnClick();
+                }
                 input.setText("0");
                 if(rhs.equals("0")) output.setText(lhs);
                 flag = 0;
@@ -82,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 lhs = input.getText().toString();
                 rhs = output.getText().toString();
+                if(operator.equals("") == false && (rhs.equals("") == false || rhs.equals("0") == false)) {
+                    equal.callOnClick();
+                }
                 input.setText("0");
                 if(rhs.equals("0")) output.setText(lhs);
                 flag = 0;
@@ -116,24 +142,12 @@ public class MainActivity extends AppCompatActivity {
                     input.setText("0");
                     output.setText(lhs);
                 } else if(temp.equals("/")) {
-                    if(rhs.equals("")) {
-                        input.setText("0");
-                        output.setText(lhs);
-                        return;
-                    }
-                    if(Double.parseDouble(rhs) > -0.1 && Double.parseDouble(rhs) < 0.1) {
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                output.setText("INF");
-                            }
-                        }, 5000);
-                        input.setText("0");
-                        output.setText("0");
-                        return;
-                    }
                     Double ans = Double.parseDouble(lhs) / Double.parseDouble(rhs);
+                    lhs = Double.toString(ans);
+                    input.setText("0");
+                    output.setText(lhs);
+                } else if(temp.equals("%")) {
+                    Double ans = Double.parseDouble(lhs) % Double.parseDouble(rhs);
                     lhs = Double.toString(ans);
                     input.setText("0");
                     output.setText(lhs);
